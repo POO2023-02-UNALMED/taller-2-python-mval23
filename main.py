@@ -10,14 +10,14 @@ class Asiento:
 
 
 class Auto:
-    def __int__(self, modelo, precio, asientos, marca, motor, registro, cantidadCreados):
+    cantidadCreados = 1
+    def __init__(self, modelo, precio, asientos, marca, motor, registro):
         self.modelo = modelo
         self.precio = precio
         self.asientos = asientos
         self.marca = marca
         self.motor = motor
         self.registro = registro
-        self.cantidadCreados = cantidadCreados
 
     def cantidadAsientos(self):
         return sum(1 for a in self.asientos if isinstance(a, Asiento))
@@ -25,14 +25,15 @@ class Auto:
     def verificarIntegridad(self):
         registro_auto = self.registro
         for asiento in self.asientos:
-            if registro_auto != asiento.registro:
-                return 'Las piezas no son originales'
+            if isinstance(asiento, Asiento):
+                if registro_auto != asiento.registro:
+                    return 'Las piezas no son originales'
         if registro_auto != self.motor.registro:
             return 'Las piezas no son originales'
         return 'Auto original'
 
 class Motor:
-    def __int__(self, numeroCilindros, tipo, registro):
+    def __init__(self, numeroCilindros, tipo, registro):
         self.numeroCilindros = numeroCilindros
         self.tipo = tipo
         self.registro = registro
@@ -43,3 +44,4 @@ class Motor:
     def asignarTipo(self, tipo):
         if tipo in ["electrico", "gasolina"]:
             self.tipo = tipo
+
